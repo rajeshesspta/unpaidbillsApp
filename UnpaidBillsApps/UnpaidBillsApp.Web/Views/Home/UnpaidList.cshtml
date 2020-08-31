@@ -1,7 +1,32 @@
-﻿
+﻿@model UnpaidBillsApp.Web.Models.UnpaidListViewModel
 @{
     ViewBag.Title = "UnpaidList";
 }
 
 <h2>UnpaidList</h2>
+    <div class="row" style="border:solid 1px red">
+        <div class="col-sm">
+            @using (Html.BeginForm("UnpaidList", "Home", FormMethod.Post))
+            {
+                <div class="form-group" style="border:solid 1px red">
+                    <label for="exampleFormControlInput1">Email address</label>
+                    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Example select</label>
+                    @Html.DropDownListFor(m => m.selectedCompanyId, Model.DropdownItemsForCompany, "Select Manufacurer")
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlSelect2">Example multiple select</label>
+
+                    <input type="submit" class="btn btn-primary" value="Submit"/>
+                    <button type="submit" class="btn btn-primary">Primary</button>
+                </div>
+                <div class="form-group">    
+                    <label for="exampleFormControlTextarea1">Example textarea</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+            }
+            </div>
+    </div>
 
