@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using UnpaidBillsApp.Web.Models;
+using UnpaidBillsApp.Web.Services;
 
 namespace UnpaidBillsApp.Web.Controllers
 {
@@ -29,15 +30,9 @@ namespace UnpaidBillsApp.Web.Controllers
         }
         public ActionResult UnpaidList()
         {
-            var companies = CreateCompanies();
-            var dropDownItemsForCompany = CreatDropdownItemsForCompany(companies);
-            dropDownItemsForCompany[2].Selected = true;
-            var viewModel = new UnpaidListViewModel
-            {
-                companies = companies,
-                DropdownItemsForCompany = dropDownItemsForCompany
-            };
-            viewModel.selectedCompanyId = "3";
+            BillService billService = new BillService();
+            var viewModel =  billService.GetUnpaidBills();
+            //viewModel.selectedCompanyId = "3";
             return View(viewModel);
         }
         [HttpPost]
@@ -45,31 +40,12 @@ namespace UnpaidBillsApp.Web.Controllers
         {
            if(ModelState.IsValid)
             {
-
+                BillService billService = new BillService();
+                model = billService.GetUnpaidBillsOfCompany(model.selectedCompanyId);
             }
             return View(model);
         }
-        private List<SelectListItem> CreatDropdownItemsForCompany(List<Company> companies)
-        {
-            List<SelectListItem> companyListItems = new List<SelectListItem>();
-            foreach (var company in companies)
-            {
-                companyListItems.Add(new SelectListItem { Text = company.name, Value = company.id.ToString() });
-            }
 
-            return companyListItems;
-        }
-        private List<Company> CreateCompanies()
-        {
-            UnpaidListViewModel model = new UnpaidListViewModel();
-            List<Company> companies = new List<Company>();
-
-            companies.Add(new Company("1", "Company1"));
-            companies.Add(new Company("2", "Company2"));
-            companies.Add(new Company("3", "Company3"));
-            companies.Add(new Company("4", "Company4"));
-            companies.Add(new Company("5", "Company5"));
-            return companies;
-        }
+        
     }
 }

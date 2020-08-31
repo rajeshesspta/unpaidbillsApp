@@ -1,4 +1,4 @@
-﻿namespace UnpaidBillsApp.Web.Models
+﻿namespace UnpaidBillsApp.Web.Services.DTOs
 {
     public class Company
     {
